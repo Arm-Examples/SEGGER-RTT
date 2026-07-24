@@ -5,6 +5,8 @@ It redirects printf()-output to SEGGER-RTT, which can then be viewed in the debb
 
 The ability of pyocd to read the RTT data from the target memory is used.
 
+The board used for the example is a PIC32CM L10-CNANO. But using SEGGER-RTT like in this example also works with any other device/board.
+
 ## Quick Start
 1. Install
    [Keil Studio for VS Code](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack)
@@ -22,7 +24,7 @@ The ability of pyocd to read the RTT data from the target memory is used.
 
 ## Requirements
 For SEGGER-RTT to work as shown in this example, the following packs and in its versions need to be installed:
-- Segger::RTT pack
+- Segger::RTT pack version  8.58.0 or newer
 - ARM::CMSIS-Compiler pack version 2.3.1 or newer
 
 ## Adding RTT printf() Output to an Application
