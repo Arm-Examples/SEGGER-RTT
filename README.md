@@ -1,9 +1,9 @@
 # SEGGER-RTT
 This example project shows how to use SEGGER RTT with pyOCD.
 
-It redirects printf()-output to SEGGER-RTT, which can then be viewed in the debbuger console.
+It redirects printf()-output and scanf()-input to SEGGER-RTT, which can then be viewed in the debbuger console.
 
-The ability of pyocd to read the RTT data from the target memory is used.
+The ability of pyocd to use the RTT data from the target memory is used.
 
 The board used for the example is a PIC32CM L10-CNANO. But using SEGGER-RTT like in this example also works with any other device/board.
 
@@ -18,9 +18,11 @@ The board used for the example is a PIC32CM L10-CNANO. But using SEGGER-RTT like
 4. Connect the board to the PC.
 5. Build and load the project with the CMSIS View
    [action buttons](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons).
-6. Open a terminal in VS Code an execute the follwing:
-   `pyocd run --cbuild-run .\out\SEGGER-RTT+PIC32CM6408PL10048.cbuild-run.yml --eot --timelimit 1`
-7. See the "Hello World!" output from the example in the terminal.
+6. Open a terminal in VS Code an execute the follwing (on Windows Poweshell Terminal):
+   `pyocd run --cbuild-run .\out\SEGGER-RTT+PIC32CM6408PL10048.cbuild-run.yml --eot -O reset_type=sysresetreq`
+7. See the "Please enter your name: " output from the example in the terminal.
+8. Type in something, like your name.
+9. See the "Hello" to you in the terminal.
 
 ## Requirements
 For SEGGER-RTT to work as shown in this example, the following packs and in its versions need to be installed:
@@ -32,6 +34,7 @@ For SEGGER-RTT to work as shown in this example, the following packs and in its 
    - Segger -> RTT
    - CMSIS-Compiler > CORE
    - CMSIS-Compiler > STDOUT (API) > RTT
+   - CMSIS-Compiler > STDIN (API) > RTT
 2. Additions to the source code are the following:
    - Include required files:
      ```
@@ -40,15 +43,19 @@ For SEGGER-RTT to work as shown in this example, the following packs and in its 
      ```
    - Call SEGGER_RTT_Init():
      ```
-     SEGGER_RTT_Init();
+     SEGGER_RTT_Init( ) ;
      ```
    - Use normal printf() for outputting fomatted text:
      ```
-     printf("Hello World!\n");
+     printf( "Please enter your name: " ) ;
+     ```
+   - Use normal scanf() for inputting fomatted text:
+     ```
+     scanf( "%s", Buffer ) ;
      ```
 3. Solution and Project Configiration
    - in Manage solution select your debug adapter and enable Telnet with Telnet Mode "Debug Console"
-   - in the csolution file, add under the debugger: node, add the rtt: node:
+   - in the csolution file, under the debugger: node, add the rtt: node:
      ```
      rtt:
        - channel:

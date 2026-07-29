@@ -30,6 +30,8 @@ project:
     - component: CMSIS-Compiler:CORE
     - component: CMSIS-Compiler:STDOUT:RTT
     - component: SEGGER:RTT
+    - component: CMSIS-Compiler:STDIN:RTT
+    - component: CMSIS-Compiler:TTY:RTT
 
   # -----------------------------------------------------------------
   # Toolchain-specific options.

@@ -34,7 +34,7 @@ solution:
   packs:
     - pack: ARM::CMSIS@>=6.0.0
     - pack: Microchip::PIC32CM-PL_DFP@>=1.0.0
-    - pack: Microchip::CMSIS-Driver_PIC32CM-PL
+    - pack: Microchip::CMSIS-Driver_PIC32CM-PL@>=1.0.313
 
   # ------------------------------------------------------------------
   # Target device(s). Add more entries for multi-target builds; switch
@@ -45,6 +45,7 @@ solution:
   target-types:
     - type: PIC32CM6408PL10048
       device: PIC32CM6408PL10048
+      board: PIC32CM6408PL10048-CNANO:Rev 1
       target-set:
         - set:
           images:
@@ -59,7 +60,6 @@ solution:
               - channel:
                   - number: 0
                     mode: stdio
-      board: PIC32CM6408PL10048-CNANO:Rev 1
 
   # ------------------------------------------------------------------
   # Build variants. Switch with --context <target>.<build>.
