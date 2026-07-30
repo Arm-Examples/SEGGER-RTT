@@ -47,7 +47,7 @@ solution:
       device: PIC32CM6408PL10048
       board: PIC32CM6408PL10048-CNANO:Rev 1
       target-set:
-        - set:
+        - set: interactive
           images:
             - project-context: SEGGER-RTT.Debug
           debugger:
@@ -56,6 +56,21 @@ solution:
             protocol: swd
             telnet:
               - mode: console
+            rtt:
+              - channel:
+                  - number: 0
+                    mode: stdio
+        - set: automated
+          images:
+            - project-context: SEGGER-RTT.Debug
+          debugger:
+            name: CMSIS-DAP@pyOCD
+            clock: 10000000
+            protocol: swd
+            stdio:
+              - mode: file
+                file-in: ..\name.txt
+                file-out: ..\output.txt
             rtt:
               - channel:
                   - number: 0
