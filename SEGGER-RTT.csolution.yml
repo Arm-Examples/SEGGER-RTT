@@ -47,7 +47,7 @@ solution:
       device: PIC32CM6408PL10048
       board: PIC32CM6408PL10048-CNANO:Rev 1
       target-set:
-        - set: interactive
+        - set: console
           images:
             - project-context: SEGGER-RTT.Debug
           debugger:
@@ -60,7 +60,7 @@ solution:
               - channel:
                   - number: 0
                     mode: stdio
-        - set: automated
+        - set: file-io
           images:
             - project-context: SEGGER-RTT.Debug
           debugger:
