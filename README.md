@@ -1,11 +1,11 @@
 # SEGGER-RTT
 This example project shows how to use SEGGER RTT with pyOCD.
 
-It redirects printf()-output and scanf()-input to SEGGER-RTT, which can then be viewed in the debbuger console.
+It redirects printf() output and scanf() input to SEGGER RTT. You can view the output in the debugger console.
 
-The ability of pyocd to use the RTT data from the target memory is used.
+pyOCD reads RTT data directly from target memory.
 
-The board used for the example is a PIC32CM L10-CNANO. But using SEGGER-RTT like in this example also works with any other device/board.
+This example uses the PIC32CM L10-CNANO board. The same approach also works with other devices and boards.
 
 ## Quick Start
 1. Install
@@ -18,49 +18,60 @@ The board used for the example is a PIC32CM L10-CNANO. But using SEGGER-RTT like
 4. Connect the board to the PC.
 5. Build and load the project with the CMSIS View
    [action buttons](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons).
-6. Open a terminal in VS Code an execute the follwing (on Windows Poweshell Terminal):
-   `pyocd run --cbuild-run .\out\SEGGER-RTT+PIC32CM6408PL10048.cbuild-run.yml --eot -O reset_type=sysresetreq`
+6. Change focus to the CMSIS Run Terminal.
 7. See the "Please enter your name: " output from the example in the terminal.
-8. Type in something, like your name.
+8. Type in something, like your name and press enter.
 9. See the "Hello" to you in the terminal.
 
 ## Requirements
-For SEGGER-RTT to work as shown in this example, the following packs and in its versions need to be installed:
-- Segger::RTT pack version  8.58.0 or newer
-- ARM::CMSIS-Compiler pack version 2.3.1 or newer
+To use SEGGER RTT as shown in this example, install the following packs:
+- `Segger::RTT` pack, version 8.58.0 or later
+- `ARM::CMSIS-Compiler` pack, version 2.3.0 or later
+- DFP and BSP packs for your device and board
 
 ## Adding RTT printf() Output to an Application
-1. In the Manage Software Components enable the following:
-   - Segger -> RTT
-   - CMSIS-Compiler > CORE
-   - CMSIS-Compiler > STDOUT (API) > RTT
-   - CMSIS-Compiler > STDIN (API) > RTT
-2. Additions to the source code are the following:
-   - Include required files:
-     ```
-     #include <SEGGER_RTT.h>
-     #include <stdio.h>
-     ```
-   - Call SEGGER_RTT_Init():
-     ```
-     SEGGER_RTT_Init( ) ;
-     ```
-   - Use normal printf() for outputting fomatted text:
-     ```
-     printf( "Please enter your name: " ) ;
-     ```
-   - Use normal scanf() for inputting fomatted text:
-     ```
-     scanf( "%s", Buffer ) ;
-     ```
+1. In the [Software Components view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#software-components-view), enable the following:
+   - `Segger` → `RTT`
+   - `CMSIS-Compiler` → `CORE`
+   - `CMSIS-Compiler` → `STDOUT (API)` → `RTT`
+   - `CMSIS-Compiler` → `STDIN (API)` → `RTT`
+2. Add the following code to your application:
+
+  - Include the required header files:
+
+    ```c
+    #include <SEGGER_RTT.h>
+    #include <stdio.h>
+    ```
+
+  - Call `SEGGER_RTT_Init()`:
+
+    ```c
+    SEGGER_RTT_Init();
+    ```
+
+  - Use `printf()` to output formatted text:
+
+    ```c
+    printf("Please enter your name: ");
+    ```
+
+  - Use `scanf()` to read formatted input:
+
+    ```c
+    scanf("%s", Buffer);
+    ```
 3. Solution and Project Configiration
-   - in Manage solution select your debug adapter and enable Telnet with Telnet Mode "Debug Console"
-   - in the csolution file, under the debugger: node, add the rtt: node:
+  - In the [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view), select your debug adapter.
+  - Enable **Telnet** and set **Telnet Mode** to **Debug Console**.
+  - In the `csolution.yml` file, add the following [`rtt:`](https://open-cmsis-pack.github.io/cmsis-toolbox/pyOCD-Debugger/#rtt) node under the [`debugger:`](https://open-cmsis-pack.github.io/cmsis-toolbox/pyOCD-Debugger/#debugger) node:
+
+     ```yaml
+            rtt:
+              - channel:
+                - number: 0
+                  mode: stdio
      ```
-     rtt:
-       - channel:
-         - number: 0
-           mode: stdio
-     ```
-## Possible modifications
-1. Instead of printing to the console, pyocd can output RTT via a telnet port. For this set the Telnet Mode to "Telnet Server".
+#### Optional configurations
+1. Instead of sending RTT output to the debug console, pyOCD can expose it through a Telnet server. To use this mode, set **Telnet Mode** to **Telnet Server**.
+2. Use **file-io** mode to read input from a file and write output to a file. To test this mode, change **Target Set** from **console** to **file-io** in the  [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view) dialog.

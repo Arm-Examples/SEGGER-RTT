@@ -32,9 +32,11 @@ solution:
   # Docs: https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#packs
   # ------------------------------------------------------------------
   packs:
-    - pack: ARM::CMSIS@>=6.0.0
-    - pack: Microchip::PIC32CM-PL_DFP@>=1.0.0
-    - pack: Microchip::CMSIS-Driver_PIC32CM-PL@>=1.0.313
+    - pack: ARM::CMSIS@^6.0.0
+    - pack: Microchip::PIC32CM-PL_DFP@^1.0.0
+    - pack: Microchip::CMSIS-Driver_PIC32CM-PL@^1.0.313
+    - pack: SEGGER::RTT@^8.58.0
+    - pack: ARM::CMSIS-Compiler@^2.3.0
 
   # ------------------------------------------------------------------
   # Target device(s). Add more entries for multi-target builds; switch
@@ -45,7 +47,7 @@ solution:
   target-types:
     - type: PIC32CM6408PL10048
       device: PIC32CM6408PL10048
-      board: PIC32CM6408PL10048-CNANO:Rev 1
+      #board: PIC32CM6408PL10048-CNANO:Rev 1
       target-set:
         - set: console
           images:

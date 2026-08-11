@@ -15,6 +15,9 @@ project:
   # Docs: https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#groups
   # -----------------------------------------------------------------
   groups:
+    - group: Documentation
+      files:
+        - file: ./README.md
     - group: App
       files:
         - file: ./main.c
@@ -51,6 +54,4 @@ project:
       - elf
       - hex
       - map
-  packs:
-    - pack: SEGGER::RTT
-    - pack: ARM::CMSIS-Compiler
+
