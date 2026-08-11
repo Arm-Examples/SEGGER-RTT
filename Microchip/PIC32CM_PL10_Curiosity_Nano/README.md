@@ -8,12 +8,8 @@ pyOCD reads RTT data directly from target memory.
 This example uses the PIC32CM L10-CNANO board. The same approach also works with other devices and boards.
 
 ## Quick Start
-1. Install
-   [Keil Studio for VS Code](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack)
-   from the VS Code marketplace.
-2. Clone this repository, for example using
-   [Git in VS Code](https://code.visualstudio.com/docs/sourcecontrol/intro-to-git),
-   or download the ZIP file. Then open the repository root folder.
+1. In the [CMSIS View](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) open the menu in the actions button and choose **Open Solution in Workspace ...**.
+2. Choose **Microchip/PIC32CM_PL10_Curiosity_Nano/SEGGER-RTT**.
 3. Let the related tools and software packs download and install. Review progress with **View > Output > CMSIS Solution**.
 4. Connect the board to the PC.
 5. Build and load the project with the CMSIS View
@@ -24,10 +20,9 @@ This example uses the PIC32CM L10-CNANO board. The same approach also works with
 9. See the "Hello" to you in the terminal.
 
 ## Requirements
-To use SEGGER RTT as shown in this example, install the following packs:
+To use SEGGER RTT as shown in this example in your own project, install the following additional packs:
 - `Segger::RTT` pack, version 8.58.0 or later
 - `ARM::CMSIS-Compiler` pack, version 2.3.0 or later
-- DFP and BSP packs for your device and board
 
 ## Adding RTT printf() Output to an Application
 1. In the [Software Components view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#software-components-view), enable the following:
