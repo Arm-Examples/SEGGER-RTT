@@ -56,7 +56,7 @@ To use SEGGER RTT as shown in this example in your own project, install the foll
     ```c
     scanf("%s", Buffer);
     ```
-3. Solution and Project Configiration
+3. Solution and Project Configuration
   - In the [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view), select your debug adapter.
   - Enable **Telnet** and set **Telnet Mode** to **Debug Console**.
   - In the `csolution.yml` file, add the following [`rtt:`](https://open-cmsis-pack.github.io/cmsis-toolbox/pyOCD-Debugger/#rtt) node under the [`debugger:`](https://open-cmsis-pack.github.io/cmsis-toolbox/pyOCD-Debugger/#debugger) node:
