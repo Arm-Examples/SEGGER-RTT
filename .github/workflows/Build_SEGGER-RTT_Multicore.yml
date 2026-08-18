@@ -1,0 +1,93 @@
+# SPDX-License-Identifier: Apache-2.0
+
+name: Build and run SEGGER RTT Multicore
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_time_limit:
+        description: Maximum target run time in seconds
+        required: false
+        default: "15"
+
+# Only one job may use the physical board at a time.
+concurrency:
+  group: t2g-b-h-hardware
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-run:
+    runs-on: [self-hosted, rsp-p5-01]
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: Infineon/T2G-B-H
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Activate CMSIS build tools
+        uses: ARM-software/cmsis-actions/vcpkg@v1
+        with:
+          config: ./vcpkg-configuration.json
+          cache: segger-rtt-t2g-b-h
+
+      - name: Activate Arm tool license
+        uses: ARM-software/cmsis-actions/armlm@v1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pyOCD
+        working-directory: .
+        run: python -m pip install "pyocd==0.44.1"
+
+      - name: Build multicore images
+        run: >-
+          cbuild SEGGER-RTT_Multicore.csolution.yml
+          --active CYT4BF8CDS@file-io
+          --packs
+
+      - name: Check connected probe
+        run: python -m pyocd list
+
+      - name: Program target
+        run: >-
+          python -m pyocd load
+          --uid 0D18149E02272400
+          --cbuild-run out/SEGGER-RTT_Multicore+CYT4BF8CDS.cbuild-run.yml
+
+      - name: Run target and collect RTT output
+        run: >-
+          python -m pyocd run
+          --uid 0D18149E02272400
+          --cbuild-run out/SEGGER-RTT_Multicore+CYT4BF8CDS.cbuild-run.yml
+          --eot
+          -O reset_type=sysresetreq
+          --timelimit "${{ inputs.run_time_limit }}"
+
+      - name: Verify output from every core
+        run: |
+          grep -Fq "Hello from CM0+ core!" output_Cortex-M0p.txt
+          grep -Fq "Hello from CM7-0 core!" output_Cortex-M7-0.txt
+          grep -Fq "Hello from CM7-1 core!" output_Cortex-M7-1.txt
+
+      - name: Upload build and RTT logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SEGGER-RTT-Multicore-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            Infineon/T2G-B-H/out/
+            Infineon/T2G-B-H/output_Cortex-M0p.txt
+            Infineon/T2G-B-H/output_Cortex-M7-0.txt
+            Infineon/T2G-B-H/output_Cortex-M7-1.txt
