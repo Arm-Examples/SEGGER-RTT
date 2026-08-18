@@ -62,6 +62,39 @@ solution:
                 channel:
                   - number: 0
                     mode: stdio
+        - set: file-io
+          images:
+            - project-context: SEGGER-RTT_Cortex-M0p.Debug
+            - project-context: SEGGER-RTT_Cortex-M7-0.Debug
+            - project-context: SEGGER-RTT_Cortex-M7-1.Debug
+          debugger:
+            name: CMSIS-DAP@pyOCD
+            port: 3333
+            protocol: swd
+            clock: 10000000
+            stdio:
+              - pname: Cortex-M0p
+                mode: file
+                file-out: ..\output_Cortex-M0p.txt
+              - pname: Cortex-M7-0
+                mode: file
+                file-out: ..\output_Cortex-M7-0.txt
+              - pname: Cortex-M7-1
+                mode: file
+                file-out: ..\output_Cortex-M7-1.txt
+            rtt:
+              - pname: Cortex-M0p
+                channel:
+                  - number: 0
+                    mode: stdio
+              - pname: Cortex-M7-0
+                channel:
+                  - number: 0
+                    mode: stdio
+              - pname: Cortex-M7-1
+                channel:
+                  - number: 0
+                    mode: stdio
 
   # List of different build configurations.
   build-types:

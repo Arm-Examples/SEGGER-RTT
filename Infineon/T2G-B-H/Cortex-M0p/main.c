@@ -22,6 +22,7 @@ static void led_timer_cb(void);
 * Global Variables
 ********************************************************************************/
 bool timer_interrupt_flag = false;
+uint8_t count ;
 
 int main(void)
 {
@@ -51,10 +52,8 @@ int main(void)
 
     /* Enable Systick and the Systick interrupt */
     Cy_SysTick_Enable();
-
-    putchar( '\x04' ) ;  // Send EOT to terminate RTT session
-    fflush(stdout) ;
-
+    
+    count=0;
     for (;;)
     {
         /* Check if timer elapsed (interrupt fired) and toggle the LED */
@@ -65,6 +64,13 @@ int main(void)
 
             /* Invert the USER LED state */        
             Cy_GPIO_Inv(LED1_PORT, LED1_PIN);
+            
+           count++ ;
+           if(1==count)
+           {
+             putchar( '\x04' ) ;  // Send EOT to terminate RTT session
+             fflush(stdout) ;
+           }
         }
     }				
 }

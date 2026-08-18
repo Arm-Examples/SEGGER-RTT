@@ -155,7 +155,8 @@ LR_IROM1 BASE_CODE_FLASH SIZE_CODE_FLASH
     }
 
     ; Application heap area (HEAP)
-    ARM_LIB_HEAP  +0 EMPTY BASE_SRAM+SIZE_SRAM-STACK_SIZE-AlignExpr(ImageLimit(RW_IRAM1), 8)
+    ;ARM_LIB_HEAP  +0 EMPTY BASE_SRAM+SIZE_SRAM-STACK_SIZE-AlignExpr(ImageLimit(RW_IRAM1), 8)
+    ARM_LIB_HEAP  +0 EMPTY 0x1000
     {
     }
 
