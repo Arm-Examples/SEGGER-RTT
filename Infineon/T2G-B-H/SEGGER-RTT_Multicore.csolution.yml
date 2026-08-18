@@ -1,0 +1,81 @@
+# A solution is a collection of related projects that share same base configuration.
+solution:
+  created-for: CMSIS-Toolbox@2.12.0
+  cdefault: # use CMSIS-Toolbox default Compiler options
+
+  # Compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: IAR
+    - compiler: CLANG
+
+  # List of miscellaneous tool-specific controls
+  misc:
+    - for-compiler: AC6 # GDB requires DWARF 5, remove when using uVision Debugger
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+
+  # List the packs that define the device and/or board.
+  packs:
+    - pack: Infineon::KIT_T2G-B-H_LITE_BSP
+    - pack: Infineon::T2G-B-H_DFP
+    - pack: ARM::CMSIS@^6.0.0
+    - pack: SEGGER::RTT@^8.58.0
+    - pack: ARM::CMSIS-Compiler@^2.3.0
+
+  # List different hardware targets that are used to deploy the solution.
+  target-types:
+    - type: CYT4BF8CDS
+      board: KIT_T2G-B-H_LITE:V1
+      device: CYT4BF8CDS
+      target-set:
+        - set: console
+          images:
+            - project-context: SEGGER-RTT_Cortex-M0p.Debug
+            - project-context: SEGGER-RTT_Cortex-M7-0.Debug
+            - project-context: SEGGER-RTT_Cortex-M7-1.Debug
+          debugger:
+            name: CMSIS-DAP@pyOCD
+            port: 3333
+            protocol: swd
+            clock: 10000000
+            telnet:
+              - pname: Cortex-M0p
+                mode: console
+              - pname: Cortex-M7-0
+                mode: console
+              - pname: Cortex-M7-1
+                mode: console
+            rtt:
+              - pname: Cortex-M0p
+                channel:
+                  - number: 0
+                    mode: stdio
+              - pname: Cortex-M7-0
+                channel:
+                  - number: 0
+                    mode: stdio
+              - pname: Cortex-M7-1
+                channel:
+                  - number: 0
+                    mode: stdio
+
+  # List of different build configurations.
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  # List related projects.
+  projects:
+    - project: Cortex-M0p/SEGGER-RTT_Cortex-M0p.cproject.yml
+    - project: Cortex-M7-0/SEGGER-RTT_Cortex-M7-0.cproject.yml
+    - project: Cortex-M7-1/SEGGER-RTT_Cortex-M7-1.cproject.yml
+  compiler: AC6
