@@ -5,11 +5,11 @@ It redirects printf() output and scanf() input to SEGGER RTT. You can view the o
 
 pyOCD reads RTT data directly from target memory.
 
-This example uses the PIC32CM L10-CNANO board. The same approach also works with other devices and boards.
+This example uses the Microchip PIC32CM L10-CNANO board. The same approach also works with other devices and boards.
 
 ## Quick Start
 1. In the [CMSIS View](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) open the menu in the actions button and choose **Open Solution in Workspace ...**.
-2. Choose **Microchip/PIC32CM_PL10_Curiosity_Nano/SEGGER-RTT**.
+2. Choose **Microchip/PL10-CNANO/SEGGER-RTT**.
 3. Let the related tools and software packs download and install. Review progress with **View > Output > CMSIS Solution**.
 4. Connect the board to the PC.
 5. Build and load the project with the CMSIS View
