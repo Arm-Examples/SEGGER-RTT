@@ -32,6 +32,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # GitHub-hosted runners currently include this launcher, but a bare
+      # self-hosted runner does not. The CMSIS vcpkg action invokes it directly.
+      - name: Bootstrap vcpkg artifacts launcher
+        working-directory: .
+        run: |
+          curl --fail --location --silent --show-error \
+            https://aka.ms/vcpkg-init.sh \
+            --output "${RUNNER_TEMP}/vcpkg-init.sh"
+          source "${RUNNER_TEMP}/vcpkg-init.sh"
+          source "${HOME}/.vcpkg/vcpkg-init"
+          command -v vcpkg
+          dirname "$(command -v vcpkg)" >> "${GITHUB_PATH}"
+
       - name: Activate CMSIS build tools
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
