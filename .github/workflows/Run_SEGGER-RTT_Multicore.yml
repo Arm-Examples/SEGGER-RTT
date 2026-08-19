@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: Apache-2.0
+
+name: Run SEGGER RTT Multicore
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_time_limit:
+        description: Maximum target run time in seconds
+        required: false
+        default: "15"
+
+# Only one job may use the physical board at a time.
+concurrency:
+  group: t2g-b-h-hardware
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  CI_run:
+    runs-on: [self-hosted, rsp-p5-01]
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: SEGGER-RTT_Multicore_artifact
+          path: ./Infineon/T2G-B-H/out
+
+      - name: Check connected probe
+        run: pyocd list
+
+      - name: Program target
+        working-directory: ./Infineon/T2G-B-H
+        run: >-
+          pyocd load
+          --uid 0D18149E02272400
+          --cbuild-run out/SEGGER-RTT_Multicore+CYT4BF8CDS.cbuild-run.yml
+
+      - name: Run target and collect RTT output
+        working-directory: ./Infineon/T2G-B-H/artifact
+        run: >-
+          pyocd run
+          --uid 0D18149E02272400
+          --cbuild-run out/SEGGER-RTT_Multicore+CYT4BF8CDS.cbuild-run.yml
+          --eot
+          -O reset_type=sysresetreq
+          --timelimit "${{ inputs.run_time_limit }}"
+
+      - name: Verify output from every core
+        run: |
+          grep -Fq "Hello from CM0+ core!" output_Cortex-M0p.txt
+          grep -Fq "Hello from CM7-0 core!" output_Cortex-M7-0.txt
+          grep -Fq "Hello from CM7-1 core!" output_Cortex-M7-1.txt

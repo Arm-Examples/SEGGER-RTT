@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
-name: Build and run SEGGER RTT Multicore
+name: Build SEGGER RTT Multicore
 
 on:
   workflow_dispatch:
