@@ -51,6 +51,9 @@ jobs:
           -O reset_type=sysresetreq
           --timelimit "${{ inputs.run_time_limit }}"
 
+      - name: list folders
+        run: ls -R
+
       - name: Verify output from every core
         working-directory: ./Infineon/T2G-B-H
         run: |
