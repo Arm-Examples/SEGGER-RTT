@@ -28,11 +28,11 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Download Build Artifact
-        uses: actions/download-artifact@v7
+        uses: dawidd6/action-download-artifact@v21
         with:
+          workflow: Build_SEGGER-RTT_Multicore.yml
           name: SEGGER-RTT_Multicore_artifact
           path: ./Infineon/T2G-B-H/out
-          run-id: ${{ github.event.workflow_run.id }}
 
       - name: Check connected probe
         run: pyocd list
