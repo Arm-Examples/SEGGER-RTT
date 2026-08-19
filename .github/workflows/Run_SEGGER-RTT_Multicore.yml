@@ -16,10 +16,11 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: read-all
 
 jobs:
   CI_run:
+    permissions: read-all
     runs-on: [self-hosted, rsp-p5-01]
     timeout-minutes: 20
 
