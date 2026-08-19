@@ -32,6 +32,7 @@ jobs:
         with:
           name: SEGGER-RTT_Multicore_artifact
           path: ./Infineon/T2G-B-H/out
+          run-id: ${{ github.event.workflow_run.id }}
 
       - name: Check connected probe
         run: pyocd list
