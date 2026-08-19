@@ -55,7 +55,7 @@ jobs:
         run: ls -R
 
       - name: Verify output from every core
-        working-directory: ./Infineon/T2G-B-H
+        working-directory: ./Infineon/T2G-B-H/out
         run: |
           grep -Fq "Hello from CM0+ core!" output_Cortex-M0p.txt
           grep -Fq "Hello from CM7-0 core!" output_Cortex-M7-0.txt

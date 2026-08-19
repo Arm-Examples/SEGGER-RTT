@@ -75,13 +75,13 @@ solution:
             stdio:
               - pname: Cortex-M0p
                 mode: file
-                file-out: ..\output_Cortex-M0p.txt
+                file-out: output_Cortex-M0p.txt
               - pname: Cortex-M7-0
                 mode: file
-                file-out: ..\output_Cortex-M7-0.txt
+                file-out: output_Cortex-M7-0.txt
               - pname: Cortex-M7-1
                 mode: file
-                file-out: ..\output_Cortex-M7-1.txt
+                file-out: output_Cortex-M7-1.txt
             rtt:
               - pname: Cortex-M0p
                 channel:
