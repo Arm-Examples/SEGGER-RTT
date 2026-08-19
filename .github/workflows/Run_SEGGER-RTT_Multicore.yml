@@ -31,8 +31,8 @@ jobs:
           name: SEGGER-RTT_Multicore_artifact
           path: ./Infineon/T2G-B-H/out
 
-      - name: Check connected probe
-        run: pyocd list
+#      - name: Check connected probe
+#        run: pyocd list
 
       - name: Program target
         working-directory: ./Infineon/T2G-B-H/out
@@ -51,8 +51,8 @@ jobs:
           -O reset_type=sysresetreq
           --timelimit "${{ inputs.run_time_limit }}"
 
-      - name: list folders
-        run: ls -R
+#      - name: list folders
+#        run: ls -R
 
       - name: Verify output from every core
         working-directory: ./Infineon/T2G-B-H/out
