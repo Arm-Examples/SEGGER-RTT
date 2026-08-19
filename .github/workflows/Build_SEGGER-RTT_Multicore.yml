@@ -36,8 +36,7 @@ jobs:
       - name: Install packs required by App solution
         working-directory: ./Infineon/T2G-B-H
         run: |
-          csolution list packs SEGGER-RTT_Multicore.csolution.yml
-                               SEGGER-RTT_Multicore.csolution.yml -m > packs.txt
+          csolution list packs SEGGER-RTT_Multicore.csolution.yml -m > packs.txt
           cpackget add -f packs.txt --force-reinstall --agree-embedded-license
 
       - name: Cache downloaded packs
