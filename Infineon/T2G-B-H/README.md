@@ -5,7 +5,7 @@ It redirects printf() output to SEGGER RTT. You can view the output in the debug
 
 pyOCD reads RTT data directly from target memory.
 
-This example uses the Infineon T2G-B-H board. The CYT4BF8CDS device on this board has 3 cores. You can use RTT to route debug output from all 3 cores to the same console. Therefore, you do not need a separate debug channel for each core.
+This example uses the Infineon KIT_T2G-B-H_LITE board. The CYT4BF8CDS device on this board has 3 cores. You can use RTT to route debug output from all 3 cores to the same console. Therefore, you do not need a separate debug channel for each core.
 
 The same approach also works with other devices and boards.
 
