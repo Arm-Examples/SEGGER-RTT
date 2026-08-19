@@ -10,16 +10,10 @@ on:
         required: false
         default: "15"
 
-# Only one job may use the physical board at a time.
-concurrency:
-  group: t2g-b-h-hardware
-  cancel-in-progress: false
-
-permissions:
-  contents: read
-
 jobs:
   CI_build:
+
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
