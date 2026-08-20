@@ -4,11 +4,6 @@ name: Build SEGGER RTT Multicore
 
 on:
   workflow_dispatch:
-    inputs:
-      run_time_limit:
-        description: Maximum target run time in seconds
-        required: false
-        default: "15"
 
 jobs:
   CI_build:
@@ -23,33 +18,16 @@ jobs:
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
           config: "./vcpkg-configuration.json"
-          cache: segger-rtt-t2g-b-h
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
-
-      - name: Initialize CMSIS pack root folder
-        run: |
-          cpackget init https://www.keil.com/pack/index.pidx
-          cpackget update-index
-
-      - name: Install packs required by App solution
-        working-directory: ./Infineon/T2G-B-H
-        run: |
-          csolution list packs SEGGER-RTT_Multicore.csolution.yml -m > packs.txt
-          cpackget add -f packs.txt --force-reinstall --agree-embedded-license
-
-      - name: Cache downloaded packs
-        uses: actions/cache@v6
-        with:
-          key: segger-rtt-t2g-b-h
-          path: /home/runner/.cache/arm/packs/.Download
 
       - name: Build multicore images
         working-directory: ./Infineon/T2G-B-H
         run: >-
           cbuild SEGGER-RTT_Multicore.csolution.yml
           --active CYT4BF8CDS@file-io
+          --packs
 
       - name: Upload output for context T2G.Release+T2G-Kit
         uses: actions/upload-artifact@v7
