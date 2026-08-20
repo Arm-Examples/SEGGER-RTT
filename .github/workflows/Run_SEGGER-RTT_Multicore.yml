@@ -4,11 +4,6 @@ name: Run SEGGER RTT Multicore
 
 on:
   workflow_dispatch:
-    inputs:
-      run_time_limit:
-        description: Maximum target run time in seconds
-        required: false
-        default: "15"
 
 # Only one job may use the physical board at a time.
 concurrency:
@@ -31,9 +26,6 @@ jobs:
           name: SEGGER-RTT_Multicore_artifact
           path: ./Infineon/T2G-B-H/out
 
-#      - name: Check connected probe
-#        run: pyocd list
-
       - name: Program target
         working-directory: ./Infineon/T2G-B-H/out
         run: >-
@@ -49,10 +41,7 @@ jobs:
           --cbuild-run SEGGER-RTT_Multicore+CYT4BF8CDS.cbuild-run.yml
           --eot
           -O reset_type=sysresetreq
-          --timelimit "${{ inputs.run_time_limit }}"
-
-#      - name: list folders
-#        run: ls -R
+          --timelimit 10
 
       - name: Verify output from every core
         working-directory: ./Infineon/T2G-B-H/out
