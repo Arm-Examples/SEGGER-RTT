@@ -1,0 +1,77 @@
+# A solution is a collection of related projects that share same base configuration.
+solution:
+  description: SEGGER-RTT solution for STM32F407G-DISC1 board.
+
+  created-for: CMSIS-Toolbox@2.15.0
+  cdefault:
+
+  # List of tested compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: IAR
+
+  # Miscellaneous toolchain controls directly passed to the tools
+  misc:
+    - for-compiler: AC6 # change to -gdwarf-4 for debugging using uVision
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+
+  # List the packs that define the device and/or board.
+  packs:
+    - pack: Keil::STM32F4xx_DFP@^3.1.1
+    - pack: ARM::CMSIS@^6.4.0
+    - pack: ARM::CMSIS-Compiler@^2.3.0
+    - pack: Keil::STM32F407G-DISC1_BSP@^1.1.0
+    - pack: SEGGER::RTT@^8.58.0
+
+  # List different hardware targets that are used to deploy the solution.
+  target-types:
+    - type: STM32F407VGTx
+      device: STM32F407VGTx
+      board: STM32F407G-DISC1:Rev.C.1
+      target-set:
+        - set: console
+          images:
+            - project-context: SEGGER-RTT.Debug
+          debugger:
+            name: ST-Link@pyOCD
+            clock: 4000000
+            protocol: swd
+            telnet:
+              - mode: console
+            rtt:
+              - channel:
+                  - number: 0
+                    mode: stdio
+        - set: file-io
+          images:
+            - project-context: SEGGER-RTT.Debug
+          debugger:
+            name: ST-Link@pyOCD
+            clock: 4000000
+            protocol: swd
+            stdio:
+              - mode: file
+                file-in: ..\name.txt
+                file-out: ..\output.txt
+            rtt:
+              - channel:
+                  - number: 0
+                    mode: stdio
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  # List related projects.
+  projects:
+    - project: SEGGER-RTT.cproject.yml
+  compiler: AC6
