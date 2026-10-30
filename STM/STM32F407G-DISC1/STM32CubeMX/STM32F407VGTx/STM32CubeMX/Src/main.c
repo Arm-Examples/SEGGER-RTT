@@ -94,7 +94,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   
   printf( "Please enter your name: " ) ;
-  scanf( "%s", Buffer ) ;
+  scanf( "%31s", Buffer ) ;
   printf( "\nHello %s!\n", Buffer ) ;
 
   putchar( '\x04' ) ;  // Send EOT to terminate RTT session

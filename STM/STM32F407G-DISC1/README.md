@@ -1,28 +1,22 @@
 # SEGGER-RTT
-This example project shows how to use SEGGER RTT with pyOCD.
+This example demonstrates how to use SEGGER RTT with pyOCD on a STM32F407G-DISC1 board, but the same approach also works with other devices and boards. It redirects `printf()` output and `scanf()` input through RTT, allowing you to interact with the application from the **Debug Console** window. pyOCD reads RTT data directly from target memory without using an interface like UART.
 
-It redirects printf() output and scanf() input to SEGGER RTT. You can view the output in the debugger console.
-
-pyOCD reads RTT data directly from target memory.
-
-This example uses the Microchip PIC32CM L10-CNANO board. The same approach also works with other devices and boards.
 
 ## Quick Start
-1. In the [CMSIS View](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) open the menu in the actions button and choose **Open Solution in Workspace ...**.
-2. Choose **Microchip/PL10-CNANO/SEGGER-RTT**.
+1. Open the [CMSIS View](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) and choose **Open Solution in Workspace ...**.
+2. Choose **STM/STM32F407G-DISC1/SEGGER-RTT**.
 3. Let the related tools and software packs download and install. Review progress with **View > Output > CMSIS Solution**.
 4. Connect the board to the PC.
-5. Build and load the project with the CMSIS View
-   [action buttons](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons).
+5. In the CMSIS View, use the [Action Buttons](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) to build, load and debug the project on the board.
 6. Change focus to the CMSIS Run Terminal.
-7. See the "Please enter your name: " output from the example in the terminal.
+7. See the **Please enter your name: ** output from the example in the terminal.
 8. Type in something, like your name and press enter.
-9. See the "Hello" to you in the terminal.
+9. See the "Hello " and your text in the terminal.
 
 ## Requirements
 To use SEGGER RTT as shown in this example in your own project, install the following additional packs:
-- `Segger::RTT` pack, version 8.58.0 or later
-- `ARM::CMSIS-Compiler` pack, version 2.3.0 or later
+- [`Segger::RTT`](https://www.keil.arm.com/packs/rtt-segger/overview/) pack, version 8.58.0 or later
+- [`ARM::CMSIS-Compiler`](https://www.keil.arm.com/packs/cmsis-compiler-arm/overview/) pack, version 2.3.0 or later
 
 ## Adding RTT printf() Output to an Application
 1. In the [Software Components view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#software-components-view), enable the following:
@@ -39,7 +33,7 @@ To use SEGGER RTT as shown in this example in your own project, install the foll
     #include <stdio.h>
     ```
 
-  - Call `SEGGER_RTT_Init()`:
+  - Call `SEGGER_RTT_Init()` at the beginning of your application:
 
     ```c
     SEGGER_RTT_Init();
@@ -68,5 +62,18 @@ To use SEGGER RTT as shown in this example in your own project, install the foll
                   mode: stdio
      ```
 #### Optional configurations
-1. Instead of sending RTT output to the debug console, pyOCD can expose it through a Telnet server. To use this mode, set **Telnet Mode** to **Telnet Server**.
-2. Use **file-io** mode to read input from a file and write output to a file. To test this mode, change **Target Set** from **console** to **file-io** in the  [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view) dialog.
+Instead of redirecting stdin/stdout to the debug console, pyOCD can also use:
+1. A **Telnet server**: To use this mode, set **Telnet Mode** to **Telnet Server** in the [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view).
+2. **File input/output**: In this mode, the text input is read from a file and the output is written to a different file. This is especially useful for automated tests. To test this mode, change **Target Set** from **console** to **file-io** in the  [Manage Solution view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#manage-solution-view) dialog. The `csolution.yml` file of this project already contains the configuration for this in the [`debugger:`](https://open-cmsis-pack.github.io/cmsis-toolbox/pyOCD-Debugger/#debugger) node:
+
+      ```yaml
+            stdio:
+              - mode: file
+                file-in: ..\name.txt
+                file-out: ..\output.txt
+            rtt:
+              - channel:
+                  - number: 0
+                    mode: stdio
+      ```
+The file **name.txt** is already provided in this project and the file **output.txt** will be generated when you run the application in this configration. Please note that stopping pyOCD with the **Load & Run / Stop** [Action Button](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons) will leave an empty output.txt file. Instead, stop pyOCD in the CMSIS Run Terminal with a CTRL+C key to close the file output.txt properly. For automated tests, you can start pyOCD with the subcommand **run** and the option --eot. In this case, pyOCD will stop when an EOT character (0x04) is sent by the application.   
