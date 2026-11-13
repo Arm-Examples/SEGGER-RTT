@@ -42,5 +42,5 @@ to CMSIS-DAP debug units such as Arm ULINKplus, as well as ST-LINK probes, and
 accesses RTT data through the target's debug port.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Arm-Examples/.github/main/profile/pyOCD-Tools-Ecosystem.png" width="460" alt="pyOCD tools ecosystem">
+  <img src="https://raw.githubusercontent.com/Arm-Examples/.github/main/profile/pyOCD-Tools-Ecosystem.png" width="600" alt="pyOCD tools ecosystem">
 </p>
