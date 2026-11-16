@@ -91,7 +91,7 @@ execution. The workflows use:
 | Workflow | Description |
 | --- | --- |
 | [Build SEGGER RTT Multicore](./.github/workflows/Build_SEGGER-RTT_Multicore.yml) | Builds the Infineon application with the `file-io` target set on a GitHub-hosted runner and uploads the generated files as an artifact. |
-| [Run SEGGER RTT Multicore](./.github/workflows/Run_SEGGER-RTT_Multicore.yml) | Runs on a self-hosted Linux runner connected to the Infineon KIT_T2G-B-H_LITE. It downloads the build artifact, programs and executes the target with pyOCD, captures RTT output, and verifies the output from all three cores. |
+| [Run SEGGER RTT Multicore](./.github/workflows/Run_SEGGER-RTT_Multicore.yml) | Runs on a self-hosted, Linux-based GitHub runner connected to the Infineon KIT_T2G-B-H_LITE. It downloads the build artifact, programs and executes the target with pyOCD, captures RTT output, and verifies the output from all three cores. |
 | [Build SEGGER RTT STM32F407](./.github/workflows/Build_SEGGER-RTT_STM32F407.yml) | Builds the STM32F407 application on a GitHub-hosted runner. This example has no HIL run action. |
 
 The HIL equipment and self-hosted runner are configured outside this
