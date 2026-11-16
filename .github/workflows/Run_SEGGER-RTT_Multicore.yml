@@ -3,7 +3,18 @@
 name: Run SEGGER RTT Multicore
 
 on:
+  workflow_run:
+    workflows:
+      - Build SEGGER RTT Multicore
+    branches:
+      - main
+    types:
+      - completed
   workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
 
 # Only one job may use the physical board at a time.
 concurrency:
@@ -12,17 +23,33 @@ concurrency:
 
 jobs:
   CI_run:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: [self-hosted, rsp-p5-01]
     timeout-minutes: 20
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
-      - name: Download Build Artifact
+      - name: Download artifact from triggering build
+        if: github.event_name == 'workflow_run'
+        uses: dawidd6/action-download-artifact@v21
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
+          name: SEGGER-RTT_Multicore_artifact
+          path: ./Infineon/T2G-B-H/out
+
+      - name: Download latest successful build artifact
+        if: github.event_name == 'workflow_dispatch'
         uses: dawidd6/action-download-artifact@v21
         with:
           workflow: Build_SEGGER-RTT_Multicore.yml
+          branch: main
+          workflow_conclusion: success
           name: SEGGER-RTT_Multicore_artifact
           path: ./Infineon/T2G-B-H/out
 
