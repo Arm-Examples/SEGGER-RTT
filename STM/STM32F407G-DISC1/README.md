@@ -12,7 +12,7 @@ data directly from target memory without using an interface such as a UART.
 1. Open the
    [CMSIS view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons)
    and choose **Open Solution in Workspace...**.
-2. Choose **STM/STM32F407G-DISC1/SEGGER-RTT**.
+2. Choose **STM/STM32F407G-DISC1/RTT**.
 3. Let the related tools and software packs download and install. Review
    progress with **View > Output > CMSIS Solution**.
 4. Connect the board to the PC.
@@ -130,3 +130,19 @@ with `Ctrl+C` to close `output.txt` properly.
 For automated tests, you can start pyOCD with the `run` subcommand and the
 `--eot` option. pyOCD then stops when the application sends an EOT character
 (`0x04`).
+
+## Continuous Integration
+
+The CMSIS solution uses the same project description for development and CI
+builds:
+
+- [`vcpkg-configuration.json`](../../../vcpkg-configuration.json) installs the
+  required CMSIS tools.
+- [`RTT.csolution.yml`](./RTT.csolution.yml) defines the build and the `console`
+  and `file-io` target sets.
+
+| Workflow | Description |
+| --- | --- |
+| [Build SEGGER RTT STM32F407](../../../.github/workflows/Build_SEGGER-RTT_STM32F407.yml) | Builds the application on a GitHub-hosted runner and uploads the generated files as an artifact. It runs for changes, pull requests, manual requests, and once a month. |
+
+This STM example does not define a hardware-in-the-loop (HIL) run action.

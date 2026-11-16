@@ -21,7 +21,7 @@ The same approach also works with other devices and boards.
    [CMSIS view](https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons),
    open the menu in the actions button and choose
    **Open Solution in Workspace...**.
-2. Choose **Infineon/T2G-B-H/SEGGER-RTT_Multicore**.
+2. Choose **Infineon/T2G-B-H/RTT_Multicore**.
 3. Let the related tools and software packs download and install. Review
    progress with **View > Output > CMSIS Solution**.
 4. Connect the board to the PC.

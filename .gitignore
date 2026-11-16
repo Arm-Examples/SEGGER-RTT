@@ -72,6 +72,7 @@ uv2csolution.log
 
 # cbuild output files
 *.cbuild.yml
+*.cbuild-pack.yml
 *.cbuild-idx.yml
 *.cbuild-run.yml
 *.cbuild-set.yml

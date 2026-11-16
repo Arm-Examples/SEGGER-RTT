@@ -3,6 +3,12 @@
 name: Build SEGGER RTT Multicore
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 3 1 * *"
   workflow_dispatch:
 
 jobs:
@@ -25,7 +31,7 @@ jobs:
       - name: Build multicore images
         working-directory: ./Infineon/T2G-B-H
         run: >-
-          cbuild SEGGER-RTT_Multicore.csolution.yml
+          cbuild RTT_Multicore.csolution.yml
           --active CYT4BF8CDS@file-io
           --packs
 

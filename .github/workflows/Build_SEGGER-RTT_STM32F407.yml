@@ -1,8 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
-name: Build SEGGER RTT for the STM32F407G-DISC1 board
+name: Build SEGGER RTT STM32F407
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 4 1 * *"
   workflow_dispatch:
 
 jobs:
@@ -25,11 +31,11 @@ jobs:
       - name: Build images for STM32F407G-DISC1 board
         working-directory: ./STM/STM32F407G-DISC1
         run: >-
-          cbuild SEGGER-RTT.csolution.yml
+          cbuild RTT.csolution.yml
           --active STM32F407VGTx@console
           --packs
 
-      - name: Upload output for context SEGGER-RTT.Debug+STM32F407VGTx
+      - name: Upload output for context RTT.Debug+STM32F407VGTx
         uses: actions/upload-artifact@v7
         with:
           name: SEGGER-RTT_artifact

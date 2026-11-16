@@ -35,7 +35,7 @@ solution:
       target-set:
         - set: console
           images:
-            - project-context: SEGGER-RTT.Debug
+            - project-context: RTT.Debug
           debugger:
             name: ST-Link@pyOCD
             clock: 4000000
@@ -48,7 +48,7 @@ solution:
                     mode: stdio
         - set: file-io
           images:
-            - project-context: SEGGER-RTT.Debug
+            - project-context: RTT.Debug
           debugger:
             name: ST-Link@pyOCD
             clock: 4000000
@@ -73,5 +73,5 @@ solution:
 
   # List related projects.
   projects:
-    - project: SEGGER-RTT.cproject.yml
+    - project: RTT.cproject.yml
   compiler: AC6
