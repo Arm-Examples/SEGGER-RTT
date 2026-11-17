@@ -1,5 +1,7 @@
 # A solution is a collection of related projects that share same base configuration.
 solution:
+  description: SEGGER-RTT solution for Infineon KIT_T2G-B-H_LITE board.
+
   created-for: CMSIS-Toolbox@2.12.0
   cdefault: # use CMSIS-Toolbox default Compiler options
 
